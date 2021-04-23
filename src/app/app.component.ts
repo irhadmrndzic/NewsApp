@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NewsService } from 'src/services/news.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'NewsApp';
+  loader: boolean = true;
+  constructor(public newsProvider:NewsService) {
+  }
+
+  showLoader(loaded){
+    this.loader = loaded;
+  }
 }

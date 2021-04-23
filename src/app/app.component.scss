@@ -1,0 +1,43 @@
+.ev-loading-bar {
+    height: 4px;
+    width: 100%;
+    position: absolute;
+    overflow: hidden;
+  }
+  
+  .ev-loading-bar:before {
+    display: block;
+    position: absolute;
+    content: "";
+    left: -200px;
+    width: 200px;
+    height: 4px;
+    background-color: #0dcaf0;
+    animation: ev-loading-bar 2s linear infinite;
+  }
+  
+  @keyframes ev-loading-bar {
+    from {
+      left: -200px;
+      width: 30%;
+    }
+    50% {
+      width: 30%;
+    }
+    70% {
+      width: 70%;
+    }
+    80% {
+      left: 50%;
+    }
+    95% {
+      left: 120%;
+    }
+    to {
+      left: 100%;
+    }
+}
+
+form{
+  margin-left: auto;
+}
