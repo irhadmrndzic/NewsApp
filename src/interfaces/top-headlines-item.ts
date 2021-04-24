@@ -8,5 +8,6 @@ export interface TopHeadlinesItem {
     source:{
         id:number,
         name:string
-    }
+    },
+    totalResults:number;
 }

@@ -20,6 +20,8 @@
     "@angular/platform-browser": "~8.2.3",
     "@angular/platform-browser-dynamic": "~8.2.3",
     "@angular/router": "~8.2.3",
+    "ngx-infinite-scroll": "^10.0.1",
+    "ngx-spinner": "^11.0.1",
     "node-sass": "^4.14.1",
     "primeicons": "^4.1.0",
     "primeng": "^11.3.2",

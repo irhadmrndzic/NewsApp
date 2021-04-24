@@ -8,14 +8,9 @@ import { NewsService } from 'src/services/news.service';
 import { HttpClientModule } from '@angular/common/http';
 import { TopheadlinesComponent } from './topheadlines/topheadlines.component';
 import { FilterService, SharedModule } from 'primeng/api';
-import { CommonModule } from '@angular/common';
-import {CardModule} from 'primeng/card';
-import {ButtonModule} from 'primeng/button';
-import {ProgressSpinnerModule} from 'primeng/progressspinner';
-import {TableModule} from 'primeng/table';
-import {PanelModule} from 'primeng/panel';
-
-
+import { Platform } from '@angular/cdk/platform';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,15 +21,12 @@ import {PanelModule} from 'primeng/panel';
     AppRoutingModule,
     HttpClientModule,
     SharedModule,
-    CommonModule,
-    CardModule,
-    ButtonModule,
-    ProgressSpinnerModule,
-    TableModule,
-    PanelModule
+    InfiniteScrollModule,
+    NgxSpinnerModule
   ],
   providers: [HttpClientService,
-  NewsService,FilterService],
+    Platform,
+    NewsService,FilterService,NgxSpinnerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
