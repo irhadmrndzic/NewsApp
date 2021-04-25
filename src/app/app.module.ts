@@ -14,12 +14,19 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { LoaderComponent } from './loader/loader.component';
 import { LoaderInterceptorService } from './loader-interceptor.service';
 import { ArticleDetailsComponent } from './article-details/article-details.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { SearchEveryArticleComponent } from './components/search-every-article/search-every-article.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
     TopheadlinesComponent,
     LoaderComponent,
-    ArticleDetailsComponent
+    ArticleDetailsComponent,
+    NavbarComponent,
+    SearchEveryArticleComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,7 +34,12 @@ import { ArticleDetailsComponent } from './article-details/article-details.compo
     HttpClientModule,
     SharedModule,
     InfiniteScrollModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgbModule
+    
   ],
   providers: [HttpClientService,
     Platform,

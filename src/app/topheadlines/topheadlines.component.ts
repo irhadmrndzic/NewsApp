@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { LazyLoadEvent } from 'primeng/api';
 import { TopHeadlinesItem } from 'src/interfaces/top-headlines-item';
 import { NewsService } from 'src/services/news.service';
@@ -10,7 +10,6 @@ import { NewsService } from 'src/services/news.service';
 })
 export class TopheadlinesComponent implements OnInit {
   @Output() appLoaded = new EventEmitter<any>();
-
 
   topHeadlinesArr:TopHeadlinesItem[];
   loading:boolean = true;
@@ -24,8 +23,10 @@ export class TopheadlinesComponent implements OnInit {
   scrollDistance = 1;
   isLast: boolean;
   index: number;
-  constructor(public newsService:NewsService,public router:Router) { 
+  constructor(public newsService:NewsService,public router:Router, public route:ActivatedRoute) { 
   }
+
+  
 
   ngOnInit() {
   this.loadInitHeadlines();
@@ -33,21 +34,10 @@ export class TopheadlinesComponent implements OnInit {
 
   loadInitHeadlines(){
 
-    this.newsService.getTopHeadlines(this.pageSize,this.page).subscribe((res:TopHeadlinesItem)=>{
+    this.newsService.getTopHeadlines(this.pageSize,this.page).subscribe((res)=>{
       if(res){
-        console.log("res",res);
         this.totalResults = res.totalResults;
         this.topHeadlinesArr = res.articles;
-
-        for (let index = 0; index < this.topHeadlinesArr.length; index++) {
-            this.topHeadlinesArr[index].id = this.articleId++;
-            if(index == this.topHeadlinesArr.length-1){
-                this.index = index;
-            }
-
-        }
-        console.log("arrt",this.topHeadlinesArr);
-
           this.loading = false;
       }
     });
@@ -59,12 +49,9 @@ export class TopheadlinesComponent implements OnInit {
     if(!this.resultsLength){
       this.loader =true;
         this.page ++; 
-      this.newsService.getTopHeadlines(this.pageSize,this.page).subscribe((res:TopHeadlinesItem)=>{
+      this.newsService.getTopHeadlines(this.pageSize,this.page).subscribe((res)=>{
         if(res){
           this.topHeadlinesArr.push(...res.articles)
-            for (let index = this.index; index < this.topHeadlinesArr.length; index++){
-                this.topHeadlinesArr[index].id = this.articleId ++;
-            }
              this.loader =false;
 
              console.log("arr",this.topHeadlinesArr);
@@ -89,12 +76,13 @@ export class TopheadlinesComponent implements OnInit {
 
 
 get resultsLength(){
-  console.log(this.topHeadlinesArr.length,this.totalResults);
   return this.topHeadlinesArr.length == this.totalResults;
 }
 
 scrollToTop(){
   document.body.scrollTop = document.documentElement.scrollTop = 0;
 }
+
+
 
 }
