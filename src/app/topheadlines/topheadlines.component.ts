@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
 import { LazyLoadEvent } from 'primeng/api';
 import { TopHeadlinesItem } from 'src/interfaces/top-headlines-item';
 import { NewsService } from 'src/services/news.service';
@@ -19,8 +19,12 @@ export class TopheadlinesComponent implements OnInit {
   page = 1;
   pageSize = 20;
 
+  articleId:number = 1;
+
   scrollDistance = 1;
-  constructor(public newsService:NewsService) { 
+  isLast: boolean;
+  index: number;
+  constructor(public newsService:NewsService,public router:Router) { 
   }
 
   ngOnInit() {
@@ -28,20 +32,29 @@ export class TopheadlinesComponent implements OnInit {
   }
 
   loadInitHeadlines(){
+
     this.newsService.getTopHeadlines(this.pageSize,this.page).subscribe((res:TopHeadlinesItem)=>{
       if(res){
         console.log("res",res);
         this.totalResults = res.totalResults;
         this.topHeadlinesArr = res.articles;
+
+        for (let index = 0; index < this.topHeadlinesArr.length; index++) {
+            this.topHeadlinesArr[index].id = this.articleId++;
+            if(index == this.topHeadlinesArr.length-1){
+                this.index = index;
+            }
+
+        }
+        console.log("arrt",this.topHeadlinesArr);
+
           this.loading = false;
-          this.appLoaded.emit(false);
       }
     });
   }
 
 
   public loadMoreHeadlines(event: LazyLoadEvent){
-    console.log("enteed");
     
     if(!this.resultsLength){
       this.loader =true;
@@ -49,11 +62,31 @@ export class TopheadlinesComponent implements OnInit {
       this.newsService.getTopHeadlines(this.pageSize,this.page).subscribe((res:TopHeadlinesItem)=>{
         if(res){
           this.topHeadlinesArr.push(...res.articles)
+            for (let index = this.index; index < this.topHeadlinesArr.length; index++){
+                this.topHeadlinesArr[index].id = this.articleId ++;
+            }
              this.loader =false;
+
+             console.log("arr",this.topHeadlinesArr);
+             
         }
       });
     }
   }
+
+   prepareData(item:TopHeadlinesItem) {
+
+    return{
+      author: item.author,
+      title: item.title,
+      description:item.description,
+      image:item.urlToImage,
+      publishedAt:item.publishedAt,
+      content:item.content,
+      sourceName:item.source.name
+    }
+  }
+
 
 get resultsLength(){
   console.log(this.topHeadlinesArr.length,this.totalResults);

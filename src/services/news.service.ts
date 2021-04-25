@@ -16,4 +16,8 @@ export class NewsService {
   public getTopHeadlines(pageSize?:number,page?:number){
    return this.http.get(this.apiUrl + "top-headlines?country=us&pageSize="+ pageSize +"&page="+page+ "&apiKey="+this.apiKey);
   }
+
+  public getArticleById(id){
+
+  }
 }
