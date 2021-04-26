@@ -23,10 +23,7 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-
-
   goToSearch(){
-    console.log("this.searchForm.controls.searchTerm.value",this.searchForm.controls.searchTerm.value);
     this.router.navigateByUrl(`/search?search=${this.searchForm.controls.searchTerm.value}`);
 }
 }

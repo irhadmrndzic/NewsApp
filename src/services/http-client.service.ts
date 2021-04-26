@@ -9,8 +9,6 @@ import { take } from 'rxjs/operators';
 export class HttpClientService {
 
   constructor(public http:HttpClient) { }
-
-
   
   public get(url: string, options?): Observable<any> {
     let subj = new Subject<any>();
@@ -55,14 +53,12 @@ export class HttpClientService {
     return subj.asObservable();
   }
 
-
   public postRetry(err:HttpErrorResponse,subj:Subject<any>,url:string, body:any | null,options?:any){
       if(err.status == 500){
         this.http.post(url,body,options).pipe(take(1)).subscribe((res)=>{
           subj.next(res);
           subj.complete();
         }, (err:HttpErrorResponse)=>{
-          console.log(err);
           subj.error(err);
           subj.complete();
         });

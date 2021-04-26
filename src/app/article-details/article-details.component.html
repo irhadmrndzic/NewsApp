@@ -3,16 +3,24 @@
         <div class="col-md-12">
           <div class="row">
               <p class="h1 mt-3 mb-3" *ngIf="article.params.title" >{{article.params.title}}</p>
+              <p class="h1 mt-3 mb-3" *ngIf="!article.params.title || article.params.title =='' " >Article title not available</p>
               <p class="h4 mt-3" *ngIf="article.params.sourceName">{{article.params.sourceName}}</p>
+              <p class="h4 mt-3" *ngIf="!article.params.sourceName || article.params.source ==''">Article source name not available</p>
               <h6><small class="text-muted" *ngIf="article.params.publishedAt">{{article.params.publishedAt | date:'short'}}</small></h6>
+              <h6><small class="text-muted" *ngIf="!article.params.publishedAt || article.params.publishedAt ==''">Article publishing date not available</small></h6>
               <p class="text-muted" *ngIf="article.params.author">{{article.params.author}}</p>
+              <p class="text-muted" *ngIf="!article.params.author || article.params.author==''">Article author not available</p>
+
             <div class="controls">
                 <img  src="{{article.params.image}}" width="100%" *ngIf="article.params.image">
+                <img *ngIf="!article.params.image || article.params.image==''"  src="./assets/images/noImage.jpg">
             </div>
             <div class="row">
-       
               <div class="col-lg-8  w-100 mt-lg-3" *ngIf="article.params.content">
                 <p class="description mb-lg-5 pb-lg-5">{{article.params.content}}</p>
+              </div>
+              <div class="col-lg-8  w-100 mt-lg-3" *ngIf="!article.params.content || article.params.content==''">
+                <p class="description mb-lg-5 pb-lg-5">Content not available</p>
               </div>
             </div>
           </div>

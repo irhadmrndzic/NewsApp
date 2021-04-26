@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {  ActivatedRoute, Router } from '@angular/router';
 import { LazyLoadEvent } from 'primeng/api';
 import { TopHeadlinesItem } from 'src/interfaces/top-headlines-item';
 import { NewsService } from 'src/services/news.service';
 import * as _ from "lodash";
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-search-every-article',
@@ -11,11 +12,11 @@ import * as _ from "lodash";
   styleUrls: ['./search-every-article.component.scss']
 })
 export class SearchEveryArticleComponent implements OnInit {
+  
   totalResults: any;
   resultsArr: any;
   searchTerm: any;
 
-  loading:boolean = true;
   loader:boolean=false;
   page = 1;
   pageSize = 20;
@@ -26,14 +27,21 @@ export class SearchEveryArticleComponent implements OnInit {
   isLast: boolean;
   index: number;
 
-  constructor(private route:ActivatedRoute, public newsService:NewsService,public router:Router){
+  sortForm: FormGroup;
+  sortOption:any;
+
+  sortOptions: any= ['all','publishedAt','relevancy', 'popularity']
+  constructor(private route:ActivatedRoute,
+              public newsService:NewsService,
+              public router:Router,
+              public formBuilder:FormBuilder){
+        
+                this.createForm();
   }
   ngOnInit(){
       this.route.queryParams.subscribe(params =>{
-        console.log(params);
         this.searchTerm = params.search;
-        console.log(this.searchTerm);
-      this.searchResults();
+        this.searchResults();
       });
   }
   
@@ -42,8 +50,6 @@ export class SearchEveryArticleComponent implements OnInit {
 
   searchResults(){
    this.newsService.searchArticles(this.searchTerm).subscribe(res=>{
-     console.log(res);
-     
      this.totalResults = res.totalResults;
     this.resultsArr = res.articles;
    });
@@ -54,13 +60,22 @@ export class SearchEveryArticleComponent implements OnInit {
     if(!this.resultsLength){
       this.loader =true;
         this.page ++; 
-      this.newsService.searchArticles(this.searchTerm,this.pageSize,this.page).subscribe((res)=>{
-        if(res){
-          
-          this.resultsArr.push(...res.articles)
-             this.loader =false;
-        }
-      });
+        if(this.sortForm.controls.sortOption.value !=""){
+          this.newsService.searchArticles(this.searchTerm,this.pageSize,this.page,this.sortForm.controls.sortOption.value).subscribe((res)=>{
+            if(res){
+              this.resultsArr.push(...res.articles)
+                 this.loader =false;
+            }
+          });
+        } else{
+         this.newsService.searchArticles(this.searchTerm,this.pageSize,this.page).subscribe((res)=>{
+          if(res){
+            this.resultsArr.push(...res.articles)
+               this.loader =false;
+          }
+        });
+      }
+    
     }
   }
   get resultsLength(){
@@ -80,8 +95,21 @@ export class SearchEveryArticleComponent implements OnInit {
     }
   }
 
-
-  sortArticles(){
-
+createForm(){
+  this.sortForm = this.formBuilder.group({
+    sortOption: ['']
+  })
+}
+  sortArticles(event){
+  if(this.sortForm.controls.sortOption.value == "all"){
+    this.newsService.searchArticles(this.searchTerm,this.pageSize,this.page).subscribe(res=>{
+      this.resultsArr = res.articles;
+    }); 
+  }else{
+    this.newsService.searchArticles(this.searchTerm,this.pageSize,this.page,this.sortForm.controls.sortOption.value).subscribe(res=>{
+      this.resultsArr = res.articles;
+    });    
+    
+  }
   }
 }

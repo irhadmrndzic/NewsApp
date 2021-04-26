@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ArticleDetailsComponent } from './article-details/article-details.component';
 import { SearchEveryArticleComponent } from './components/search-every-article/search-every-article.component';
-import { TopheadlinesComponent } from './topheadlines/topheadlines.component';
+import { TopheadlinesComponent } from './components/topheadlines/topheadlines.component';
 
 
 const routes: Routes = [

@@ -1,0 +1,50 @@
+body{
+  height: 100%;
+}
+.centered-container{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h1:first-letter {
+    text-transform:capitalize;
+}
+
+
+.img-container{
+    display: block;
+    width: 100%;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+    padding: 55% 0 0 0; 
+  }
+  img {
+  
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  .card-body {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  button.btn {
+    margin-top: auto;
+  }
+  
+  .form-select {
+     padding: .375rem 0rem .375rem 0rem;
+  }
+  ::ng-deep .ng-select {
+   z-index: 9999;
+  }

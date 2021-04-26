@@ -11,19 +11,15 @@ export class ArticleDetailsComponent implements OnInit {
 
   constructor(private router: Router,
     public activatedRoute: ActivatedRoute) {
-      // this.article =  this.activatedRoute.snapshot.paramMap.get("author");
-      // console.log(this.article);
-      this.activatedRoute.paramMap.subscribe((res)=>{
-        this.article = res;
-        console.log(this.article);
-        
-      });
+   
 }
 
 
   ngOnInit() {
-
-    
+    this.activatedRoute.paramMap.subscribe((res)=>{
+      this.article = res;
+      
+    });
   }
 
 }

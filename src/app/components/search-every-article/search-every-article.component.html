@@ -1,19 +1,18 @@
-
-
-
 <div class="container-fluid px-1 py-2" >
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Sort By
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" >Popularity </a>
-          <a class="dropdown-item">Relevance</a>
-          <a class="dropdown-item" >Published date</a>
-        </div>
-      </div>
-      
-    <div infinite-scroll
+    <h1 class="display-1">You searched for : {{searchTerm}}</h1>
+
+
+
+<ng-container *ngIf="resultsArr.length > 0"> 
+    <form class="form-inline" [formGroup]="sortForm" (ngSubmit)="sortArticles()">
+<ng-select  class="w-25"  [searchable]="false" [clearable]="false" [clearSearchOnAdd]="false" formControlName="sortOption" >
+    <ng-option *ngFor="let option of sortOptions" [value]="option">{{option}}
+    </ng-option>
+</ng-select>
+<button class="btn btn-outline-success my-2 my-sm-0" type="submit"  >Sort</button>
+</form>
+
+<div infinite-scroll
     [infiniteScrollDistance]="2"
     [infiniteScrollThrottle]="50"
     (scrolled)="loadMoreArticles()">
@@ -26,10 +25,13 @@
                     <img *ngIf="result.urlToImage"  src="{{result.urlToImage}}" width="100%">
                     <img *ngIf="!result.urlToImage"  src="./assets/images/noImage.jpg">
                 </div>
-                    <h3 class="card-title">{{result.title}}</h3>
-                    <p class="card-subtitle mt-2 mb-2  fst-italic">{{result.source.name}}</p>
+                <h3 class="card-title" *ngIf="result.title">{{result.title}}</h3>
+                <h3 class="card-title" *ngIf="result.title==''|| !result.title">Title not available</h3>
+                <p class="card-subtitle mt-2 mb-2  fst-italic" *ngIf="result.source.name" >{{result.source.name}}</p>
+                <p class="card-subtitle mt-2 mb-2  fst-italic"  *ngIf="result.source.name==''|| !result.source.name">Article source not available</p>
 
-                    <p class="card-text" *ngIf="result.description">{{result.description}}.</p>
+                <p class="card-text" *ngIf="result.description">{{result.description}}</p>
+                <p class="card-text" *ngIf="result.description=='' || !result.description">Article description not available</p>
                    <button class="btn btn-info " [routerLink]="['/article-details', prepareData(result)]" >
                        Read More
                     </button>
@@ -42,15 +44,8 @@
         </div>
     </div>
 </div>
-
-
-
-    <!-- <div class="clearfix"  (click)="scrollToTop()" *ngIf="!loader && resultsLength" >
-
-    <button type="button" class="btn btn-primary btn-lg float-end">
-        BACK TO TOP
-
-    </button>
-</div> -->
-
+</ng-container>
+<ng-container *ngIf="resultsArr.length ==0" >
+    <div class="centered-container"> <h3 class="display-3">No results</h3></div>
+</ng-container>
 </div>

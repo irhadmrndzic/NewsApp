@@ -2,6 +2,7 @@
 
 <div class="container-fluid px-1 py-2" *ngIf="!loading">
 
+    <h1 class="display-1">Top Headlines</h1>
     <div infinite-scroll
     [infiniteScrollDistance]="2"
     [infiniteScrollThrottle]="50"
@@ -15,10 +16,13 @@
                     <img *ngIf="headline.urlToImage"  src="{{headline.urlToImage}}" width="100%">
                     <img *ngIf="!headline.urlToImage"  src="./assets/images/noImage.jpg">
                 </div>
-                    <h3 class="card-title">{{headline.title}}</h3>
-                    <p class="card-subtitle mt-2 mb-2  fst-italic">{{headline.source.name}}</p>
+                    <h3 class="card-title" *ngIf="headline.title">{{headline.title}}</h3>
+                    <h3 class="card-title" *ngIf="headline.title==''||!headline.title">Title not available</h3>
+                    <p class="card-subtitle mt-2 mb-2  fst-italic" *ngIf="headline.source.name" >{{headline.source.name}}</p>
+                    <p class="card-subtitle mt-2 mb-2  fst-italic"  *ngIf="headline.source.name==''|| !headline.source.name">Article source not available</p>
 
-                    <p class="card-text" *ngIf="headline.description">{{headline.description}}.</p>
+                    <p class="card-text" *ngIf="headline.description">{{headline.description}}</p>
+                    <p class="card-text" *ngIf="headline.description=='' || !headline.description">Article description not available</p>
                    <button class="btn btn-info " [routerLink]="['article-details', prepareData(headline)]" >
                        Read More
                     </button>
@@ -31,15 +35,4 @@
         </div>
     </div>
 </div>
-
-
-
-    <div class="clearfix"  (click)="scrollToTop()" *ngIf="!loader && resultsLength" >
-
-    <button type="button" class="btn btn-primary btn-lg float-end">
-        BACK TO TOP
-
-    </button>
-</div>
-
 </div>
