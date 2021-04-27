@@ -1,9 +1,7 @@
 <div class="container-fluid px-1 py-2" >
     <h1 class="display-1">You searched for : {{searchTerm}}</h1>
 
-
-
-<ng-container *ngIf="resultsArr.length > 0"> 
+<ng-container *ngIf="resultsArr" > 
     <form class="form-inline" [formGroup]="sortForm" (ngSubmit)="sortArticles()">
 <ng-select  class="w-25"  [searchable]="false" [clearable]="false" [clearSearchOnAdd]="false" formControlName="sortOption" >
     <ng-option *ngFor="let option of sortOptions" [value]="option">{{option}}
@@ -45,7 +43,7 @@
     </div>
 </div>
 </ng-container>
-<ng-container *ngIf="resultsArr.length ==0" >
+<ng-container *ngIf=" !resultsArr" >
     <div class="centered-container"> <h3 class="display-3">No results</h3></div>
 </ng-container>
 </div>

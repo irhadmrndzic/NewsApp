@@ -14,7 +14,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class SearchEveryArticleComponent implements OnInit {
   
   totalResults: any;
-  resultsArr: any;
+  resultsArr: any[];
   searchTerm: any;
 
   loader:boolean=false;

@@ -2,6 +2,8 @@
 
 <div class="container-fluid px-1 py-2" >
 
+<ng-container *ngIf="topHeadlinesArr" > 
+
     <h1 class="display-1">Top Headlines</h1>
     <div infinite-scroll
     [infiniteScrollDistance]="2"
@@ -35,4 +37,9 @@
         </div>
     </div>
 </div>
+</ng-container>
+
+<ng-container *ngIf=" !topHeadlinesArr" >
+    <div class="centered-container"> <h3 class="display-3">No results</h3></div>
+</ng-container>
 </div>
