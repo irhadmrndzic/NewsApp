@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { LazyLoadEvent } from 'primeng/api';
 import { TopHeadlinesItem } from 'src/interfaces/top-headlines-item';
@@ -15,15 +15,19 @@ export class TopheadlinesComponent implements OnInit {
   totalResults:number;
   page = 1;
   pageSize = 20;
-  articleId:number = 1;
-  scrollDistance = 1;
   isLast: boolean;
   index: number;
-
   constructor(public newsService:NewsService,
               public router:Router,
               public route:ActivatedRoute) { 
+
+              this.router.events.subscribe((e: any) => {
+                  if (e instanceof NavigationEnd) {
+                    this.loadInitHeadlines();
+                  }
+                });
   }
+
 
   ngOnInit() {
   this.loadInitHeadlines();

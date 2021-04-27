@@ -21,12 +21,6 @@ export class SearchEveryArticleComponent implements OnInit {
   page = 1;
   pageSize = 20;
 
-  articleId:number = 1;
-
-  scrollDistance = 1;
-  isLast: boolean;
-  index: number;
-
   sortForm: FormGroup;
   sortOption:any;
 

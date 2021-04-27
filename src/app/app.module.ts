@@ -11,15 +11,15 @@ import { Platform } from '@angular/cdk/platform';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { LoaderComponent } from './loader/loader.component';
-import { ArticleDetailsComponent } from './article-details/article-details.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { FormsModule, NgSelectOption, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SearchEveryArticleComponent } from './components/search-every-article/search-every-article.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TopheadlinesComponent } from './components/topheadlines/topheadlines.component';
 import { LoaderInterceptorService } from 'src/services/loader-interceptor.service';
-import { NgSelectConfig, NgSelectModule } from '@ng-select/ng-select';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { ArticleDetailsComponent } from './components/article-details/article-details.component';
 @NgModule({
   declarations: [
     AppComponent,
